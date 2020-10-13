@@ -1,2 +1,2 @@
-Player: EXAMPLE
-Score: EXAMPLE
+Player: c
+Score: 0
