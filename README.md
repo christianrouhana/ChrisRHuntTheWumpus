@@ -1,4 +1,4 @@
-# Welcome to Hunt the Wumpus implemented by Christian Rouhana 2020
+# Welcome to Hunt the Wumpus implemented by Christian Rouhana
 
 This was a personal project to practice my object oriented programming skills in C++. Most 
 of my education was in Java, C#, and Python. I had this idea when my brother asked me for help
