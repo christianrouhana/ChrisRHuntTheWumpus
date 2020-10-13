@@ -20,6 +20,8 @@ This project was completed using:
 	Sublime Text
 	
 	NotePad++
+	
+	C++ 11
 
 To play this game, navigate to the folder location using a bash terminal tool and run  "./WumpusGame"
 
