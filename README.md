@@ -6,12 +6,19 @@ in his Data Structures project. I liked the prompt, and decided to see if I coul
 a more  advanced  version using the skills I've learned throughout my degree.
 
 This project was completed using:
+
 	g++ version 9.3.0
+	
 	Linux Mint 20.04 Ulyana, Kernel 5.4.0-48-generic x86_64
+	
 	Windows 10 version 2004
-	Ubuntu Linux 
+	
+	Ubuntu Linux 20.04 WSL2
+	
 	Windows 10 WSL2
+	
 	Sublime Text
+	
 	NotePad++
 
 To play this game, navigate to the folder location using a bash terminal tool and run  "./WumpusGame"
