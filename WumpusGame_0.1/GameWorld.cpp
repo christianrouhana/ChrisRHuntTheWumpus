@@ -14,6 +14,10 @@ GameWorld::GameWorld ( )
 
 void GameWorld::Generate ( ) 
 {
+	while (pitLocations.empty()) //prevent pitLocations from becoming too large after many restarts
+	{
+		pitLocations.pop_front();
+	}
 	srand(time(NULL));
 	/* any cell gameBoard[i][j] = {0 = EMPTY, 1 = USER, 2 = PIT, 3 = GOLD, 4 = WUMPUS} */
 	for (int x = 0; x < 5; ++x)
