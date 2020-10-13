@@ -26,11 +26,11 @@ This project was completed using:
 To play this game, navigate to the folder location using a bash terminal tool and run  "./WumpusGame"
 
 
-#More information on Hunt the Wumpus and its history can be found here
+# More information on Hunt the Wumpus and its history can be found here
 
 https://en.wikipedia.org/wiki/Hunt_the_Wumpus
 
-#How to play
+# How to play
 
 	i or I will move the player UP    
 	k or K will move the player DOWN    
@@ -55,6 +55,6 @@ https://en.wikipedia.org/wiki/Hunt_the_Wumpus
 	Losting gives you -500 points ):    
 	That is all the instructions. Have fun!  
 
-#Upcoming features
+# Upcoming features
 
 I plan to add more traditional Wumpus features. I want to add bats and a perception engine that tells the user "they feel a breeze" etc.
