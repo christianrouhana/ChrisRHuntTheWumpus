@@ -3,7 +3,7 @@
 This was a personal project to practice my object oriented programming skills in C++. Most 
 of my education was in Java, C#, and Python. I had this idea when my brother asked me for help
 in his Data Structures project. I liked the prompt, and decided to see if I could implement 
-a more  advanced  version using the skills I've learned throughout my degree.
+a more  advanced  version using the skills I've learned throughout my education.
 
 This project was completed using:
 
