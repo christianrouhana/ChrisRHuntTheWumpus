@@ -57,4 +57,4 @@ https://en.wikipedia.org/wiki/Hunt_the_Wumpus
 
 # Upcoming features
 
-I plan to add more traditional Wumpus features. I want to add bats and a perception engine that tells the user "they feel a breeze" etc. I also want to implement an AI for the Wumpus which will hunt the character down if they take too long to complete the game, or if they miss their arrow
+I plan to add more traditional Wumpus features. I want to add bats and a perception engine that tells the user "they feel a breeze" etc. This will allow the user to make more decisions without taking the score penalty of viewing the map. I also want to implement an AI for the Wumpus which will hunt the character down if they take too long to complete the game, or if they miss their arrow
