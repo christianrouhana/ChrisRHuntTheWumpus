@@ -1,2 +1,2 @@
-Player: Christian
-Score: -10
+Player: EXAMPLE
+Score: EXAMPLE
