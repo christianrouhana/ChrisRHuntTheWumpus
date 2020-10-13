@@ -14,7 +14,9 @@ public:
 	Location ();
 	Location (int row, int col);
 	Location (const Location& location);
+	Location& operator= (const Location& location);
 	bool operator==(const Location& location) const;
+	bool operator!=(const Location& location) const;
 	bool Adjacent( Location location );
 	void move(char d);
 

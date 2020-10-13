@@ -25,9 +25,25 @@ Location::Location (const Location& location)
 	col = location.col;
 }
 
+Location& Location::operator= (const Location& location)
+{
+	if (this == &location)
+	{
+		return *this;
+	}
+	col = location.col;
+	row = location.row;
+	return *this;
+}
+
 bool Location::operator== (const Location& location) const
 {
 	return (this -> row == location.row && this -> col == location.col);
+}
+
+bool Location::operator!= (const Location& location) const
+{
+	return (this -> row != location.row or this -> col != location.col);
 }
 
 bool Location::Adjacent ( Location location ) 

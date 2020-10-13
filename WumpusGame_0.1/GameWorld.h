@@ -11,10 +11,10 @@
 #include <list>
 #include <ctime>
 #include <algorithm>
+#include <fstream>
 
 
-#include "Location.h"
-#include "senses.h" 
+#include "Location.h" 
 
 class GameWorld
 {
@@ -28,22 +28,26 @@ class GameWorld
 		bool wumpusDead;
 		bool victory;
 		bool userDead;
-		//bool hasArrow; 
-		//bool hasGold; 
-		//senses playerSenses;
+		bool hasArrow; 
+		bool hasGold; 
+		bool justGotGold;
 
 	public:
     	GameWorld();
-	
+		void Generate( );
+
     	void displayEntireWorld();
 		void displayVisibleWorld();
 		void move( char d );
+		bool JustGotGold();
 		bool haveIWon();
 		bool amIAlive();
+		bool wumpusAlive ( );
+		bool userHasGold ( );
+		bool userHasArrow ( );
+		bool climb ( );
 		bool listContains(std::list<Location> __list, Location obj);
-		//void shootArrow();
-		//void checkSenses();
-		// void printArrayDEBUG();
+		void shootArrow();
 };
  
 #endif

@@ -9,6 +9,11 @@ using namespace std;
 
 GameWorld::GameWorld ( ) 
 {	
+	Generate( );
+}
+
+void GameWorld::Generate ( ) 
+{
 	srand(time(NULL));
 	/* any cell gameBoard[i][j] = {0 = EMPTY, 1 = USER, 2 = PIT, 3 = GOLD, 4 = WUMPUS} */
 	for (int x = 0; x < 5; ++x)
@@ -56,9 +61,12 @@ GameWorld::GameWorld ( )
 	gameBoard[i][j] = 4;
 	wumpusLocation = Location(i,j);
 
-	// wumpusDead = false;
+	wumpusDead = false;
 	victory = false;
 	userDead = false;
+	hasArrow = true;
+	hasGold = false;
+	justGotGold = false;
 }
 
 // if given a cheat command, the engine will display the entire world state
@@ -66,7 +74,7 @@ void GameWorld::displayEntireWorld ( )
 {
 	cout << "+";
 	for (int i = 0; i < 5; i++)
-		cout << "---+";
+		cout << "-----+";
 
 	cout << endl;
 
@@ -75,27 +83,27 @@ void GameWorld::displayEntireWorld ( )
 		cout << "|";
 		for (int j = 0; j < 5; j++)
 		{
-			if (gameBoard[i, j] == 1) 
+			if (gameBoard[i][j] == 1) 
 				cout << "U";
 			else 
 				cout << " ";
 
-			if (gameBoard[i, j] == 2) 
+			if (gameBoard[i][j] == 2) 
 				cout << "P";
 			else 
 				cout << " ";
 
-			if (gameBoard[i, j] == 3) 
+			if (gameBoard[i][j] == 3) 
 				cout << "G";
 			else 
 				cout << " ";
 
-			if (gameBoard[i, j] == 4) 
+			if (gameBoard[i][j] == 4) 
 				cout << "W";
 			else 
 				cout << " ";
 
-			if (gameBoard[i, j] == 5) 
+			if (gameBoard[i][j] == 5) 
 				cout << "X";
 			else 
 				cout << " ";
@@ -107,7 +115,7 @@ void GameWorld::displayEntireWorld ( )
 
 	cout << "+";
 	for (int i = 0; i < 5; i++)
-		cout << "---+";
+		cout << "-----+";
 
 	cout << endl;
 }
@@ -117,7 +125,7 @@ void GameWorld::displayVisibleWorld ( )
 {
 	cout << "+";
 	for (int i = 0; i < 5; i++)
-		cout << "---+";
+		cout << "-----+";
 
 	cout << endl;
 
@@ -127,29 +135,29 @@ void GameWorld::displayVisibleWorld ( )
 		for (int j = 0; j < 5; j++)
 		{
 
-			if (userLocation.adjacent(Location(i, j)) or Location(i,j) == userLocation)
+			if (userLocation.Adjacent(Location(i, j)) or Location(i,j) == userLocation)
 			{
-				if (gameBoard[i, j] == 1) 
+				if (gameBoard[i][j] == 1) 
 					cout << "U";
 				else 
 					cout << " ";
 
-				if (gameBoard[i, j] == 2) 
+				if (gameBoard[i][j] == 2) 
 					cout << "P";
 				else 
 					cout << " ";
 
-				if (gameBoard[i, j] == 3) 
+				if (gameBoard[i][j] == 3) 
 					cout << "G";
 				else 
 					cout << " ";
 
-				if (gameBoard[i, j] == 4) 
+				if (gameBoard[i][j] == 4) 
 					cout << "W";
 				else 
 					cout << " ";
 
-				if (gameBoard[i, j] == 5) 
+				if (gameBoard[i][j] == 5) 
 					cout << "X";
 				else 
 					cout << " ";
@@ -167,29 +175,32 @@ void GameWorld::displayVisibleWorld ( )
 
 	cout << "+";
 	for (int i = 0; i < 5; i++)
-		cout << "---+";
+		cout << "-----+";
 
 	cout << endl;
 }
 
-// invokes move ( char d ) method in userLocation, updates game board appropriately
+// calls Location::move( char d ) method in userLocation, updates game board appropriately
 void GameWorld::move( char d )
 {
+	justGotGold = false;
 	Location old = userLocation;
 	userLocation.move(tolower(d)); 
-	gameBoard[old.row, old.col] = 0;
-	if (gameBoard[userLocation.row, userLocation.col] != 2 and gameBoard[userLocation.row, userLocation.col] != 4 and gameBoard[userLocation.row, userLocation.col] != 3 )
+	gameBoard[old.row][ old.col] = 0;
+	if (gameBoard[userLocation.row][ userLocation.col] != 2 and gameBoard[userLocation.row][ userLocation.col] != 4 and gameBoard[userLocation.row][ userLocation.col] != 3 )
 	{
-		gameBoard[userLocation.row, userLocation.col] = 1;
+		gameBoard[userLocation.row][ userLocation.col] = 1;
 	}
-	else // condition to end the game
+	else 
 	{
-		if (gameBoard[userLocation.row, userLocation.col] == 3)
+		if (gameBoard[userLocation.row][ userLocation.col] == 3)
 		{
-			victory = true;
+			hasGold = true;
+			justGotGold = true;
 			cout << "You got the gold!\n";
+			gameBoard[userLocation.row][ userLocation.col] = 1;
 		}
-		else if (gameBoard[userLocation.row, userLocation.col] == 2)
+		else if (gameBoard[userLocation.row][ userLocation.col] == 2)
 		{
 			userDead = true;
 			cout << "You fell in a pit!\n";
@@ -202,6 +213,11 @@ void GameWorld::move( char d )
 	}
 }
 
+// quirky method to check if the user picked up the gold on their most RECENT turn
+bool GameWorld::JustGotGold()
+{
+	return justGotGold;
+}
 // checks for win condition. The user will win if the user gets the gold and climbs at 1,1
 bool GameWorld::haveIWon ( )
 { 
@@ -211,7 +227,112 @@ bool GameWorld::haveIWon ( )
 // checks for loss condition [player is slain]
 bool GameWorld::amIAlive ( )
 {
-	return userDead;
+	return !userDead;
+}
+
+bool GameWorld::wumpusAlive ( )
+{
+	return !wumpusDead;
+}
+
+bool GameWorld::userHasGold ( )
+{
+	return hasGold;
+}
+
+bool GameWorld::userHasArrow ( )
+{
+	return hasArrow;
+}
+
+// user must be in the starting location and must have the gold to return true
+bool GameWorld::climb ( ) 
+{
+	if (userLocation == Location(4, 0) and hasGold){
+		victory = true;
+		return true;
+	}
+	return false;
+}
+
+void GameWorld::shootArrow ( )
+{
+	char d;
+	while (true)
+	{
+		cout << "Time to shoot! What direction are you shooting? [u:Up, d:Down, l:Left, r:Right, q:Changed your mind] ";
+		cin >> d;
+		int row = userLocation.row;
+		int col = userLocation.col;
+		if (d == 'u')
+		{
+			if (gameBoard[row - 1][ col] == 4)
+			{
+				wumpusDead = true;
+				cout << "You killed the Wumpus!!!!! \n";
+				gameBoard[row - 1][ col] = 0;
+			}
+			else
+			{
+				cout << "You missed.\n";
+			}
+			hasArrow = false;
+			break;
+		}
+		else if (d == 'd')
+		{
+			if (gameBoard[row + 1][ col] == 4)
+			{
+				wumpusDead = true;
+				cout << "You killed the Wumpus!!!!! \n";
+				gameBoard[row + 1][ col] = 0;
+			}
+			else
+			{
+				cout << "You missed.\n";
+			}
+			hasArrow = false;
+			break;
+		}
+		else if (d == 'l')
+		{
+			if (gameBoard[row][ col - 1] == 4)
+			{
+				wumpusDead = true;
+				cout << "You killed the Wumpus!!!!! \n";
+				gameBoard[row][ col - 1] = 0;
+			}
+			else
+			{
+				cout << "You missed.\n";
+			}
+			hasArrow = false;
+			break;
+		}
+		else if (d == 'r')
+		{
+			if (gameBoard[row][ col + 1] == 4)
+			{
+				wumpusDead = true;
+				cout << "You killed the Wumpus!!!!! \n";
+				gameBoard[row][ col + 1] = 0;
+			}
+			else
+			{
+				cout << "You missed.\n";
+			}
+			hasArrow = false;
+			break;
+		}
+		else if (d == 'q')
+		{
+			break;
+		}
+		else 
+		{
+			cout << "Sorry, I didn't understand your input. Please try again \n";
+		}
+	}
 }
 
 // tool for checking if a list<T> contains an specified object
@@ -219,3 +340,4 @@ bool GameWorld::listContains ( std::list<Location> __list, Location obj )
 {
 	return (std::find(__list.begin(), __list.end(), obj) != __list.end());
 }
+
