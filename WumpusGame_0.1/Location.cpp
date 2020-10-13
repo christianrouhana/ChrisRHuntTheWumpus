@@ -1,8 +1,6 @@
 // Location.cpp
 // Christian Rouhana 2020
 
-// Location.cc
-
 #include "Location.h"
 
 using namespace std;
