@@ -21,7 +21,7 @@ This project was completed using:
 	
 	NotePad++
 	
-	C++ 11
+	C++
 
 To play this game, navigate to the folder location using a bash terminal tool and run  "./WumpusGame"
 
