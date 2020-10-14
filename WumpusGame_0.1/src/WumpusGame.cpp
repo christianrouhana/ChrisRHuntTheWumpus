@@ -1,6 +1,9 @@
 // WumpusGame.cpp
 // Christian Rouhana 2020
 
+// SOUND FILE RETRIEVED FROM https://freesound.org/people/julius_galla/sounds/232685/
+// modified from stereo to mono for git rules 50Mb file size limit
+
 #include "WumpusGame.h"
 #include <SFML/Audio.hpp>
 

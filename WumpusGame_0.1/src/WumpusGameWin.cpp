@@ -2,7 +2,7 @@
 // Christian Rouhana 2020
 
 // SOUND FILE RETRIEVED FROM https://freesound.org/people/julius_galla/sounds/232685/
-// COLOR CODE RETRIEVED FROM https://www.daniweb.com/programming/software-development/code/216345/add-a-little-color-to-your-console-text
+
 
 #include "WumpusGame.h"
 #include <windows.h>

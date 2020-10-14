@@ -2,6 +2,8 @@
 // Christian Rouhana 2020
 // windows version of GameWorld Engine
 
+// COLOR CODE RETRIEVED FROM https://www.daniweb.com/programming/software-development/code/216345/add-a-little-color-to-your-console-text
+
 #include "GameWorld.h"
 #include <windows.h>
 using namespace std;
