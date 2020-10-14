@@ -25,6 +25,8 @@ This project was completed using:
 
 To play this game, navigate to the folder location using a bash terminal tool and run  "./WumpusGame"
 
+If you are running Windows, run WumpusGameWin.exe
+
 
 # More information on Hunt the Wumpus and its history can be found here
 
