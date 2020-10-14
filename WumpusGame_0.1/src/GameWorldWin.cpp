@@ -129,7 +129,7 @@ void GameWorld::displayEntireWorld ( )
 				cout << "X";
 			else 
 				cout << " ";
-			SetConsoleTextAttribute(hConsole, 8);
+			SetConsoleTextAttribute(hConsole, 7);
 			cout << "|";
 		}
 		cout << endl;
@@ -202,7 +202,7 @@ void GameWorld::displayVisibleWorld ( )
 					cout << "X";
 				else 
 					cout << " ";
-				SetConsoleTextAttribute(hConsole, 8);
+				SetConsoleTextAttribute(hConsole, 7);
 			}
 			else 
 			{

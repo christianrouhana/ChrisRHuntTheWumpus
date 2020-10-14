@@ -1,2 +1,2 @@
 Player: christian
-Score: 280
+Score: -50
