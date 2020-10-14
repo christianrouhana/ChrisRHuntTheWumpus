@@ -14,7 +14,7 @@ int main ()
 { 
 	sf::Music music;
 	
-	if (!music.openFromFile("julius-galla__atmosphere-cave-loop.wav"))
+	if (!music.openFromFile("sound/julius-galla__atmosphere-cave-loop.wav"))
 	{
 		cout << "Error loading sound, exiting...";
 		return -1; //error
