@@ -1,7 +1,11 @@
 // WumpusGame.cpp
 // Christian Rouhana 2020
 
+// SOUND FILE RETRIEVED FROM https://freesound.org/people/julius_galla/sounds/232685/
+// modified from stereo to mono for git rules 50Mb file size limit
+
 #include "WumpusGame.h"
+#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -11,6 +15,15 @@ void instructions();
 
 int main () 
 { 
+	sf::Music music;
+	
+	if (!music.openFromFile("sound/julius-galla__atmosphere-cave-loop.wav"))
+	{
+		cout << "Error loading sound, exiting...";
+		return -1; //error
+	}
+	music.play();
+	music.setLoop(true);
 	string playerName = intro();
 	cout << "Beginning game..." << endl;
 
@@ -119,6 +132,7 @@ int main ()
 	cout << "Press ENTER or any key to exit" << endl;
 	cin.ignore();
 	cin.get();
+	music.stop();
 	return 0; 
 }
 
