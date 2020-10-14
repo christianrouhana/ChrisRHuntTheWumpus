@@ -1,6 +1,6 @@
-// GameWorld.cpp
+// GameWorldWin.cpp
 // Christian Rouhana 2020
-
+// windows version of GameWorld Engine
 
 #include "GameWorld.h"
 #include <windows.h>

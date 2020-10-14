@@ -1,13 +1,13 @@
 // GameWorld.cpp
 // Christian Rouhana 2020
 
-
 #include "GameWorld.h"
 
 using namespace std;
 
-// taken from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-// https://pastebin.com/zWC3t9hC
+// Color taken from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
+// and https://pastebin.com/zWC3t9hC
+
 #include <ostream>
 namespace Color {
     enum Code {
