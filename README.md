@@ -32,8 +32,6 @@ https://en.wikipedia.org/wiki/Hunt_the_Wumpus
 
 # How to play
 
-CATUION: CURRENTLY ONLY RUNS ON LINUX OR WINDOWS WSL2
-
 	i or I will move the player UP    
 	k or K will move the player DOWN    
 	j or J will move the player LEFT    
