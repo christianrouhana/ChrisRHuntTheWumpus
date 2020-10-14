@@ -6,6 +6,23 @@
 
 using namespace std;
 
+// taken from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
+// https://pastebin.com/zWC3t9hC
+#include <ostream>
+namespace Color {
+    enum Code {
+        FG_RED      = 31,
+        FG_GREEN    = 32,
+        FG_BLUE     = 34,
+		FG_YELLOW   = 33,
+		FG_MAGENTA  = 35,
+		FG_CYAN     = 36,
+        FG_DEFAULT  = 39,
+    };
+    std::ostream& operator<<(std::ostream& os, Code code) {
+		return os << "\033[" << static_cast<int>(code) << "m";
+	}
+}
 
 GameWorld::GameWorld ( ) 
 {	
@@ -14,7 +31,7 @@ GameWorld::GameWorld ( )
 
 void GameWorld::Generate ( ) 
 {
-	while (pitLocations.empty()) //prevent pitLocations from becoming too large after many restarts
+	while (!pitLocations.empty()) //prevent pitLocations from becoming too large after many restarts
 	{
 		pitLocations.pop_front();
 	}
@@ -27,7 +44,6 @@ void GameWorld::Generate ( )
 			gameBoard[x][y] = 0;
 		}
 	}
-
 	// create user location stored in Location(row, col)
 	gameBoard[4][0] = 1;
 	userLocation = Location(4, 0);
@@ -87,23 +103,23 @@ void GameWorld::displayEntireWorld ( )
 		cout << "|";
 		for (int j = 0; j < 5; j++)
 		{
-			if (gameBoard[i][j] == 1) 
-				cout << "U";
+		if (gameBoard[i][j] == 1) 
+				cout << Color::FG_CYAN << "U" << Color::FG_DEFAULT;
 			else 
 				cout << " ";
-
+			
 			if (gameBoard[i][j] == 2) 
-				cout << "P";
+				cout << Color::FG_MAGENTA << "P" << Color::FG_DEFAULT;
 			else 
 				cout << " ";
 
 			if (gameBoard[i][j] == 3) 
-				cout << "G";
+				cout << Color::FG_YELLOW << "G" << Color::FG_DEFAULT;
 			else 
 				cout << " ";
 
 			if (gameBoard[i][j] == 4) 
-				cout << "W";
+				cout << Color::FG_RED << "W" << Color::FG_DEFAULT;	
 			else 
 				cout << " ";
 
@@ -142,22 +158,22 @@ void GameWorld::displayVisibleWorld ( )
 			if (userLocation.Adjacent(Location(i, j)) or Location(i,j) == userLocation)
 			{
 				if (gameBoard[i][j] == 1) 
-					cout << "U";
+					cout << Color::FG_CYAN << "U" << Color::FG_DEFAULT;
 				else 
 					cout << " ";
 
 				if (gameBoard[i][j] == 2) 
-					cout << "P";
+					cout << Color::FG_MAGENTA << "P" << Color::FG_DEFAULT;
 				else 
 					cout << " ";
 
 				if (gameBoard[i][j] == 3) 
-					cout << "G";
+					cout << Color::FG_YELLOW << "G" << Color::FG_DEFAULT;
 				else 
 					cout << " ";
 
 				if (gameBoard[i][j] == 4) 
-					cout << "W";
+					cout << Color::FG_RED << "W" << Color::FG_DEFAULT;
 				else 
 					cout << " ";
 

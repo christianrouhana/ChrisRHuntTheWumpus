@@ -114,8 +114,11 @@ int main ()
 	cout << "Score saved to \"GameScore.txt\"" << endl;
 	ofstream myfile;
 	myfile.open ("GameScore.txt");
-	myfile << "Player: " << playerName << "\nScore: " << score;
+	myfile << "Player: " << playerName << "\nScore: " << score << endl;
 	myfile.close();
+	cout << "Press ENTER or any key to exit" << endl;
+	cin.ignore();
+	cin.get();
 	return 0; 
 }
 

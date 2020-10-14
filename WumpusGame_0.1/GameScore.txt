@@ -1,2 +1,2 @@
-Player: c
+Player: christian
 Score: 0
