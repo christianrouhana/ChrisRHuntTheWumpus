@@ -3,8 +3,9 @@
 
 
 #include "GameWorld.h"
-
+#include <windows.h>
 using namespace std;
+
 
 GameWorld::GameWorld ( ) 
 {	
@@ -74,6 +75,9 @@ void GameWorld::Generate ( )
 // if given a cheat command, the engine will display the entire world state
 void GameWorld::displayEntireWorld ( )
 {
+	HANDLE  hConsole;
+	
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	cout << "+";
 	for (int i = 0; i < 5; i++)
 		cout << "-----+";
@@ -85,31 +89,47 @@ void GameWorld::displayEntireWorld ( )
 		cout << "|";
 		for (int j = 0; j < 5; j++)
 		{
-		if (gameBoard[i][j] == 1) 
-				cout << "U";
-			else 
+			if (gameBoard[i][j] == 1) 
+			{
+				SetConsoleTextAttribute(hConsole, 11);
+				cout  <<"U" ;
+			}
+			else
+			{
 				cout << " ";
-			
+			}
 			if (gameBoard[i][j] == 2) 
-				cout << "P";
+			{
+				SetConsoleTextAttribute(hConsole, 13);
+				cout <<"P" ;
+			}
 			else 
+			{
 				cout << " ";
-
+			}
 			if (gameBoard[i][j] == 3) 
-				cout << "G";
+			{			
+				SetConsoleTextAttribute(hConsole, 14);
+				cout << "G" ;
+			}
 			else 
+			{
 				cout << " ";
-
+			}
 			if (gameBoard[i][j] == 4) 
-				cout << "W";	
+			{
+				SetConsoleTextAttribute(hConsole, 12);
+				cout << "W" ;	
+			}
 			else 
+			{
 				cout << " ";
-
+			}
 			if (gameBoard[i][j] == 5) 
 				cout << "X";
 			else 
 				cout << " ";
-
+			SetConsoleTextAttribute(hConsole, 8);
 			cout << "|";
 		}
 		cout << endl;
@@ -125,6 +145,9 @@ void GameWorld::displayEntireWorld ( )
 // if given a noraml display command, this will display the world adjacent to the user [diagonal included]
 void GameWorld::displayVisibleWorld ( )
 {
+	HANDLE  hConsole;
+	
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	cout << "+";
 	for (int i = 0; i < 5; i++)
 		cout << "-----+";
@@ -140,29 +163,46 @@ void GameWorld::displayVisibleWorld ( )
 			if (userLocation.Adjacent(Location(i, j)) or Location(i,j) == userLocation)
 			{
 				if (gameBoard[i][j] == 1) 
-					cout << "U" ;
-				else 
+				{
+					SetConsoleTextAttribute(hConsole, 11);
+					cout  <<"U" ;
+				}
+				else
+				{
 					cout << " ";
-
+				}
 				if (gameBoard[i][j] == 2) 
-					cout << "P" ;
+				{
+					SetConsoleTextAttribute(hConsole, 13);
+					cout <<"P" ;
+				}
 				else 
+				{
 					cout << " ";
-
+				}
 				if (gameBoard[i][j] == 3) 
+				{			
+					SetConsoleTextAttribute(hConsole, 14);
 					cout << "G" ;
+				}
 				else 
+				{
 					cout << " ";
-
+				}
 				if (gameBoard[i][j] == 4) 
-					cout << "W" ;
+				{
+					SetConsoleTextAttribute(hConsole, 12);
+					cout << "W" ;	
+				}
 				else 
+				{
 					cout << " ";
-
+				}
 				if (gameBoard[i][j] == 5) 
 					cout << "X";
 				else 
 					cout << " ";
+				SetConsoleTextAttribute(hConsole, 8);
 			}
 			else 
 			{
