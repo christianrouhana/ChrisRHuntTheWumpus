@@ -56,11 +56,11 @@ void Location::move(char d)
 { 
 	if (d == 'i' and this -> row != 0)
 		row--;
-	if (d == 'k' and this -> row != 4)
+	if (d == 'k' and this -> row != 9)
 		row++;
 	if (d == 'j' and this -> col != 0)
 		col--;
-	if (d == 'l' and this -> col != 4)
+	if (d == 'l' and this -> col != 9)
 		col++;
 	
 	// cout << "NEW LOCATION: " << row << ", " << col << endl;

@@ -1,11 +1,19 @@
-// WumpusGame.cpp
-// Christian Rouhana 2020
+/*
+WumpusGame.cpp
+Christian Rouhana 2020
 
-// SOUND FILE RETRIEVED FROM https://freesound.org/people/julius_galla/sounds/232685/
-// modified from stereo to mono for git rules 50Mb file size limit
+SOUND FILES RETRIEVED FROM 
+
+	https://freesound.org/people/julius_galla/sounds/232685/
+		modified from stereo to mono for git rules 50Mb file size limit
+	https://freesound.org/people/seanmorrissey96/sounds/509422/  located  ->  GameWorld
+	https://freesound.org/people/smcameron/sounds/50801/  located  ->  GameWorld
+	https://freesound.org/people/Saviraz/sounds/512216/  located  ->  GameWorld
+	https://freesound.org/people/brendan89/sounds/321553/  located  ->  GameWorld
+	https://freesound.org/people/kfatehi/sounds/368771/  located  ->  Gameworld
+*/
 
 #include "WumpusGame.h"
-#include <SFML/Audio.hpp>
 
 using namespace std;
 
@@ -17,10 +25,9 @@ int main ()
 { 
 	sf::Music music;
 	
-	if (!music.openFromFile("sound/julius-galla__atmosphere-cave-loop.wav"))
+	if (!music.openFromFile("sound/cave.wav"))
 	{
-		cout << "Error loading sound, exiting...";
-		return -1; //error
+		cout << "Error loading cave sound..." << endl; //error
 	}
 	music.play();
 	music.setLoop(true);
@@ -173,18 +180,24 @@ string intro()
 
 void instructions()
 {
+	cout << Color::FG_CYAN << "MOVEMENT: \n";
 	cout << "i or I will move the player UP \n";
 	cout << "k or K will move the player DOWN \n";
 	cout << "j or J will move the player LEFT \n";
-	cout << "l or L will move the player RIGHT \n";
+	cout << "l or L will move the player RIGHT \n\n";
+
+	cout << Color::FG_YELLOW << "ACTION: \n";
 	cout << "s or S will shoot an arrow \n";
 	cout << "x or X will climb if you are back at the starting position and have the gold \n";
 	cout << "v or V will display the world as well as any game elements adjacent to your location \n";
-	cout << "c or C will activate a cheat code! You will see the entire world state \n";
+	cout << "c or C will activate a cheat code! You will see the entire world state \n\n";
+
+	cout << Color::FG_DEFAULT << "SYSTEM: \n";
 	cout << "r or R will restart the game while keeping your player name \n";
 	cout << "n or N will restart the game and allow for a new user to play \n";
-	cout << "q or Q to quit \n";
+	cout << "q or Q to quit \n\n";
 
+	cout << Color::FG_MAGENTA << "SCORING: \n";
 	cout << "Your score starts at 0,every turn that you stay alive you gain 20 points \n"; 
 	cout << "Every time you use v or V, you get -10 points \n";
 	cout <<	"Every time you use c or C, you get -50 points \n";
@@ -193,7 +206,8 @@ void instructions()
 	cout << "You will lose if you die by being eaten by the Wumpus or falling into a pit. \n";
 	cout << "You will win by getting the gold, getting back to your starting point, and climbing!! \n";
 	cout << "Winning scores you 500 points! \n";
-	cout << "Losting gives you -500 points ): \n";
-	cout << "That is all the instructions. Have fun!";
+	cout << "Losting gives you -500 points ): \n\n";
+
+	cout << Color::FG_DEFAULT << "That is all the instructions. Have fun!";
 	cout << endl;
 }

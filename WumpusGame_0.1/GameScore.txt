@@ -1,2 +1,2 @@
-Player: christian
-Score: -60
+Player: Chris
+Score: 730

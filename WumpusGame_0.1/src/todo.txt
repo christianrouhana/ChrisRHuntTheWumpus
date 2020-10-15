@@ -1,0 +1,6 @@
+TODO:
+
+	add visisted locations and revealing map
+	bats
+
+	gamestate class 

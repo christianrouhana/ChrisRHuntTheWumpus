@@ -4,28 +4,32 @@
 #include "GameWorld.h"
 
 using namespace std;
-
-// Color taken from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-// and https://pastebin.com/zWC3t9hC
-
-#include <ostream>
-namespace Color {
-    enum Code {
-        FG_RED      = 31,
-        FG_GREEN    = 32,
-        FG_BLUE     = 34,
-		FG_YELLOW   = 33,
-		FG_MAGENTA  = 35,
-		FG_CYAN     = 36,
-        FG_DEFAULT  = 39,
-    };
-    std::ostream& operator<<(std::ostream& os, Code code) {
-		return os << "\033[" << static_cast<int>(code) << "m";
-	}
-}
-
+	
 GameWorld::GameWorld ( ) 
 {	
+	if (!bufferWumpus.loadFromFile("sound/wumpusEat.wav"))
+	{
+		cout << "Error loading wumpus sound.." << endl; // error
+	}
+	wumpusSound.setBuffer(bufferWumpus);
+
+	if (!bufferGold.loadFromFile("sound/gold.wav"))
+	{
+		cout << "Error loading gold sound.." << endl; // error
+	}
+	goldSound.setBuffer(bufferGold);
+
+	if (!arrowBuffer.loadFromFile("sound/arrow.wav"))
+	{
+		cout << "Error loading arrow sound.." << endl; // error
+	}
+	arrowSound.setBuffer(arrowBuffer);
+
+	if (!pitBuffer.loadFromFile("sound/pit.wav"))
+	{
+		cout << "Error loading pit sound.." << endl; // error
+	}
+	pitSound.setBuffer(pitBuffer);
 	Generate( );
 }
 
@@ -37,24 +41,24 @@ void GameWorld::Generate ( )
 	}
 	srand(time(NULL));
 	/* any cell gameBoard[i][j] = {0 = EMPTY, 1 = USER, 2 = PIT, 3 = GOLD, 4 = WUMPUS} */
-	for (int x = 0; x < 5; ++x)
+	for (int x = 0; x < 10; ++x)
 	{
-		for (int y = 0; y < 5; ++ y)
+		for (int y = 0; y < 10; ++ y)
 		{
 			gameBoard[x][y] = 0;
 		}
 	}
 	// create user location stored in Location(row, col)
-	gameBoard[4][0] = 1;
-	userLocation = Location(4, 0);
+	gameBoard[9][0] = 1;
+	userLocation = Location(9, 0);
 
 	int i = 0, j = 0;
 	// generate pits
-	int numPits = rand() % 5 + 5;
+	int numPits = rand() % 30 + 10;
 	for (int k = 0; k < numPits; k++) // worst case case O(numPits) but Does not always generate number of pits equal to numPits. needs improvement
 	{
-		i = rand() % 5;
-		j = rand() % 5;
+		i = rand() % 10;
+		j = rand() % 10;
 
 		if (userLocation != Location(i, j))
 		{
@@ -66,8 +70,8 @@ void GameWorld::Generate ( )
 	// generate gold location. gold will never be co-located with init user location or pit
 	while(Location(i,j) == userLocation or listContains(pitLocations, Location(i,j)))
 	{
-		i = rand() % 5;
-		j = rand() % 5;
+		i = rand() % 10;
+		j = rand() % 10;
 	}
 	gameBoard[i][j] = 3;
 	goldLocation = Location(i,j);
@@ -75,8 +79,8 @@ void GameWorld::Generate ( )
 	// generate wumpus location. wumpus will never be co-located with init userlocation, pits, or gold
 	while(Location(i,j) == goldLocation or Location(i,j) == userLocation or listContains(pitLocations, Location(i,j)))
 	{
-		i = rand() % 5; 
-		j = rand() % 5;
+		i = rand() % 10; 
+		j = rand() % 10;
 	}
 	gameBoard[i][j] = 4;
 	wumpusLocation = Location(i,j);
@@ -93,15 +97,15 @@ void GameWorld::Generate ( )
 void GameWorld::displayEntireWorld ( )
 {
 	cout << "+";
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 		cout << "-----+";
 
 	cout << endl;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		cout << "|";
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 10; j++)
 		{
 		if (gameBoard[i][j] == 1) 
 				cout << Color::FG_CYAN << "U" << Color::FG_DEFAULT;
@@ -134,7 +138,7 @@ void GameWorld::displayEntireWorld ( )
 	}
 
 	cout << "+";
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 		cout << "-----+";
 
 	cout << endl;
@@ -144,15 +148,15 @@ void GameWorld::displayEntireWorld ( )
 void GameWorld::displayVisibleWorld ( )
 {
 	cout << "+";
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 		cout << "-----+";
 
 	cout << endl;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		cout << "|";
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 10; j++)
 		{
 
 			if (userLocation.Adjacent(Location(i, j)) or Location(i,j) == userLocation)
@@ -194,7 +198,7 @@ void GameWorld::displayVisibleWorld ( )
 	}
 
 	cout << "+";
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 		cout << "-----+";
 
 	cout << endl;
@@ -218,17 +222,21 @@ void GameWorld::move( char d )
 			hasGold = true;
 			justGotGold = true;
 			cout << "You got the gold!\n";
+			goldSound.play();
 			gameBoard[userLocation.row][ userLocation.col] = 1;
 		}
 		else if (gameBoard[userLocation.row][ userLocation.col] == 2)
 		{
 			userDead = true;
 			cout << "You fell in a pit!\n";
+			pitSound.play();
 		}
 		else 
 		{
+
 			userDead = true;
 			cout << "You were eaten by the Wumpus\n";
+			wumpusSound.play();
 		}
 	}
 }
@@ -268,7 +276,7 @@ bool GameWorld::userHasArrow ( )
 // user must be in the starting location and must have the gold to return true
 bool GameWorld::climb ( ) 
 {
-	if (userLocation == Location(4, 0) and hasGold){
+	if (userLocation == Location(9, 0) and hasGold){
 		victory = true;
 		return true;
 	}
@@ -284,8 +292,13 @@ void GameWorld::shootArrow ( )
 		cin >> d;
 		int row = userLocation.row;
 		int col = userLocation.col;
+		
+
 		if (d == 'u')
 		{
+			// cout << "playing arrow sound" << endl;
+			arrowSound.play();
+
 			if (gameBoard[row - 1][ col] == 4)
 			{
 				wumpusDead = true;
@@ -301,6 +314,9 @@ void GameWorld::shootArrow ( )
 		}
 		else if (d == 'd')
 		{
+			// cout << "playing arrow sound" << endl;
+			arrowSound.play();
+
 			if (gameBoard[row + 1][ col] == 4)
 			{
 				wumpusDead = true;
@@ -316,6 +332,9 @@ void GameWorld::shootArrow ( )
 		}
 		else if (d == 'l')
 		{
+			// cout << "playing arrow sound" << endl;
+			arrowSound.play();
+
 			if (gameBoard[row][ col - 1] == 4)
 			{
 				wumpusDead = true;
@@ -331,6 +350,9 @@ void GameWorld::shootArrow ( )
 		}
 		else if (d == 'r')
 		{
+			// cout << "playing arrow sound" << endl;
+			arrowSound.play();
+
 			if (gameBoard[row][ col + 1] == 4)
 			{
 				wumpusDead = true;
@@ -352,6 +374,7 @@ void GameWorld::shootArrow ( )
 		{
 			cout << "Sorry, I didn't understand your input. Please try again \n";
 		}
+
 	}
 }
 

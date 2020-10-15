@@ -12,14 +12,15 @@
 #include <ctime>
 #include <algorithm>
 #include <fstream>
-
+#include <SFML/Audio.hpp>
 
 #include "Location.h" 
+#include "Color.hpp"
 
 class GameWorld
 {
 	private:
-		int gameBoard[5][5];
+		int gameBoard[10][10];
 		
 		Location userLocation;
 		std::list<Location> pitLocations;
@@ -31,6 +32,20 @@ class GameWorld
 		bool hasArrow; 
 		bool hasGold; 
 		bool justGotGold;
+
+		sf::SoundBuffer bufferWumpus;
+		sf::Sound wumpusSound;
+
+		sf::SoundBuffer bufferGold;
+		sf::Sound goldSound;
+
+		sf::SoundBuffer arrowBuffer;
+		sf::Sound arrowSound;
+
+		sf::SoundBuffer pitBuffer;
+		sf::Sound pitSound;
+		//sf::SoundBuffer bufferPit;
+		//sf::SoundBuffer bufferBats;
 
 	public:
     	GameWorld();
